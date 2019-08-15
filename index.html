@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" rel="external nofollow" />
@@ -42,61 +42,63 @@
             overflow: auto;
         }
     </style>
-  </head>
-  <body>
-    <script>
-      (function() {
+</head>
+<body>
+<script>
+    (function() {
         // See https://github.com/systemjs/systemjs/issues/1939
         var originalResolve = System.resolve
         var moduleMap = {}
         System.resolve = function(name) {
-          return originalResolve.apply(this, arguments).then(resolved => {
-            moduleMap[name] = resolved;
-            return resolved;
-          });
+            return originalResolve.apply(this, arguments).then(resolved => {
+                moduleMap[name] = resolved;
+                return resolved;
+            });
         }
         window.getPublicPath = function(name) {
-          const url = moduleMap[name]
-          if (url) {
-            let index = url.lastIndexOf('/js')
-            if (index < 0) {
-              index = url.lastIndexOf('/')
+            const url = moduleMap[name]
+            if (url) {
+                let index = url.lastIndexOf('/js')
+                if (index < 0) {
+                    index = url.lastIndexOf('/')
+                }
+                index++
+                return url.slice(0, index);
+            } else {
+                throw Error(`Could not find url for module '${name}'`)
             }
-            index++
-            return url.slice(0, index);
-          } else {
-            throw Error(`找不到模块 '${name}' 的url`)
-          }
         }
 
         Promise.all([System.import('single-spa'), System.import('vue'), System.import('vue-router')]).then(function (modules) {
-          var singleSpa = modules[0];
-          var Vue = modules[1];
-          var VueRouter = modules[2];
+            var singleSpa = modules[0];
+            var Vue = modules[1];
+            var VueRouter = modules[2];
 
-          Vue.use(VueRouter)
+            Vue.use(VueRouter)
 
-          singleSpa.registerApplication(
-            'navbar-view',
-            () => System.import('navbar-view'),
-            location => true
-          )
+            singleSpa.registerApplication(
+                'navbar-view',
+                () => System.import('navbar-view'),
+                location => true
+            )
 
-          singleSpa.registerApplication(
-            'rps-view',
-            () => System.import('rps-view'),
-            location => location.pathname.startsWith('/rps-view')
-          )
+            singleSpa.registerApplication(
+                'crm-view',
+                () => System.import('crm-view'),
+                location => location.pathname.startsWith('/crm-view')
+            )
 
-          singleSpa.registerApplication(
-            'crm-view',
-            () => System.import('crm-view'),
-            location => location.pathname.startsWith('/crm-view')
-          )
+            singleSpa.registerApplication(
+                'rps-view',
+                () => System.import('rps-view'),
+                location => location.pathname.startsWith('/rps-view')
+            )
 
-          singleSpa.start();
+            singleSpa.start();
         })
-      })()
-    </script>
-    <!-- See https://github.com/joeldenning/import-map-overrides#user-interface  -->
-    <import-map-overrides-full show-when-local-storage="overrides-ui"></import-map-overrides-full>
+    })()
+</script>
+<!-- See https://github.com/joeldenning/import-map-overrides#user-interface  -->
+<import-map-overrides-full show-when-local-storage="overrides-ui"></import-map-overrides-full>
+</body>
+</html>
