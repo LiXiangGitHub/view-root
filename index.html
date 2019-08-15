@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" rel="external nofollow" />
+    <title>中骅物流</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="importmap-type" content="systemjs-importmap">
+    <script type="systemjs-importmap">
+      {
+        "imports": {
+          "navbar-view": "http://localhost:8080/app.js",
+          "crm-view": "http://localhost:8081/app.js",
+          "rps-view": "http://localhost:8082/app.js",
+          "single-spa": "https://cdnjs.cloudflare.com/ajax/libs/single-spa/4.3.7/system/single-spa.min.js",
+          "vue": "https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js",
+          "vue-router": "https://cdn.jsdelivr.net/npm/vue-router@3.0.7/dist/vue-router.min.js"
+        }
+      }
+    </script>
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/single-spa/4.3.7/system/single-spa.min.js" as="script" crossorigin="anonymous" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js" as="script" crossorigin="anonymous" />
+    <script src="https://unpkg.com/import-map-overrides@1.7.2/dist/import-map-overrides.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/4.1.0/system.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/4.1.0/extras/amd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/4.1.0/extras/named-exports.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/4.1.0/extras/named-register.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/4.1.0/extras/use-default.min.js"></script>
+    <style>
+        div[id$='navbar-view'] {
+            width: 100%;
+            height: 100%;
+        }
+        #single-spa-application\:crm-view,#single-spa-application\:rps-view {
+            width: calc(100vw - 274px);
+            height:  calc(100vh - 120px);
+            position: absolute;
+            right: 0;
+            top: 120px;
+            z-index: 10;
+            overflow: auto;
+        }
+        /*#single-spa-application\:rps-view{*/
+            /*width: calc(100vw - 274px);*/
+            /*height:  calc(100vh - 120px);*/
+            /*position: absolute;*/
+            /*right: 0;*/
+            /*top: 120px;*/
+            /*z-index: 10;*/
+            /*overflow: auto;*/
+        /*}*/
+    </style>
+  </head>
+  <body>
+    <script>
+      (function() {
+        // See https://github.com/systemjs/systemjs/issues/1939
+        var originalResolve = System.resolve
+        var moduleMap = {}
+        System.resolve = function(name) {
+          return originalResolve.apply(this, arguments).then(resolved => {
+            moduleMap[name] = resolved;
+            return resolved;
+          });
+        }
+        window.getPublicPath = function(name) {
+          const url = moduleMap[name]
+          if (url) {
+            let index = url.lastIndexOf('/js')
+            if (index < 0) {
+              index = url.lastIndexOf('/')
+            }
+            index++
+            return url.slice(0, index);
+          } else {
+            throw Error(`找不到模块 '${name}' 的url`)
+          }
+        }
+
+        Promise.all([System.import('single-spa'), System.import('vue'), System.import('vue-router')]).then(function (modules) {
+          var singleSpa = modules[0];
+          var Vue = modules[1];
+          var VueRouter = modules[2];
+
+          Vue.use(VueRouter)
+
+          singleSpa.registerApplication(
+            'navbar-view',
+            () => System.import('navbar-view'),
+            location => true
+          )
+
+          singleSpa.registerApplication(
+            'rps-view',
+            () => System.import('rps-view'),
+            location => location.pathname.startsWith('/rps-view')
+          )
+
+          singleSpa.registerApplication(
+            'crm-view',
+            () => System.import('crm-view'),
+            location => location.pathname.startsWith('/crm-view')
+          )
+
+          singleSpa.start();
+        })
+      })()
+    </script>
+    <!-- See https://github.com/joeldenning/import-map-overrides#user-interface  -->
+    <import-map-overrides-full show-when-local-storag
