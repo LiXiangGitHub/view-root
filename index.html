@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" rel="external nofollow" />
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" rel="external nofollow"/>
     <title>中骅物流</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="importmap-type" content="systemjs-importmap">
@@ -18,9 +18,11 @@
           "vue-router": "https://cdn.jsdelivr.net/npm/vue-router@3.0.7/dist/vue-router.min.js"
         }
       }
+
     </script>
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/single-spa/4.3.7/system/single-spa.min.js" as="script" crossorigin="anonymous" />
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js" as="script" crossorigin="anonymous" />
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/single-spa/4.3.7/system/single-spa.min.js"
+          as="script" crossorigin="anonymous"/>
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js" as="script" crossorigin="anonymous"/>
     <script src="https://unpkg.com/import-map-overrides@1.7.2/dist/import-map-overrides.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/4.1.0/system.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/4.1.0/extras/amd.min.js"></script>
@@ -28,13 +30,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/4.1.0/extras/named-register.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/4.1.0/extras/use-default.min.js"></script>
     <style>
-        div[id$='navbar-view'] {
+        div[id$='view-navbar'] {
             width: 100%;
             height: 100%;
         }
-        #single-spa-application\:crm-view,#single-spa-application\:rps-view {
+
+        #single-spa-application\:view-crm, #single-spa-application\:view-rps {
             width: calc(100vw - 274px);
-            height:  calc(100vh - 120px);
+            height: calc(100vh - 120px);
             position: absolute;
             right: 0;
             top: 120px;
@@ -45,17 +48,17 @@
 </head>
 <body>
 <script>
-    (function() {
+    (function () {
         // See https://github.com/systemjs/systemjs/issues/1939
         var originalResolve = System.resolve
         var moduleMap = {}
-        System.resolve = function(name) {
+        System.resolve = function (name) {
             return originalResolve.apply(this, arguments).then(resolved => {
                 moduleMap[name] = resolved;
                 return resolved;
             });
         }
-        window.getPublicPath = function(name) {
+        window.getPublicPath = function (name) {
             const url = moduleMap[name]
             if (url) {
                 let index = url.lastIndexOf('/js')
@@ -96,6 +99,7 @@
 
             singleSpa.start();
         })
+
     })()
 </script>
 <!-- See https://github.com/joeldenning/import-map-overrides#user-interface  -->

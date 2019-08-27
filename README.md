@@ -1,4 +1,4 @@
-# rps-view
+# view-rps
 
 ## 项目安装
 ```
