@@ -1,7 +1,8 @@
 {
   "name": "root-view",
   "scripts": {
-    "dev": "serve -s -l 5000"
+    "dev": "serve -s -l 5000",
+    "build": "serve -s build"
   },
   "devDependencies": {
     "serve": "^11.1.0"

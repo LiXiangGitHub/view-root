@@ -10,9 +10,9 @@
     <script type="systemjs-importmap">
       {
         "imports": {
-          "navbar-view": "http://localhost:8080/app.js",
-          "crm-view": "http://localhost:8081/app.js",
-          "rps-view": "http://localhost:8082/app.js",
+          "view-navbar": "http://localhost:8080/app.js",
+          "view-crm": "http://localhost:8081/app.js",
+          "view-rps": "http://localhost:8082/app.js",
           "single-spa": "https://cdnjs.cloudflare.com/ajax/libs/single-spa/4.3.7/system/single-spa.min.js",
           "vue": "https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js",
           "vue-router": "https://cdn.jsdelivr.net/npm/vue-router@3.0.7/dist/vue-router.min.js"
@@ -77,21 +77,21 @@
             Vue.use(VueRouter)
 
             singleSpa.registerApplication(
-                'navbar-view',
-                () => System.import('navbar-view'),
+                'view-navbar',
+                () => System.import('view-navbar'),
                 location => true
             )
 
             singleSpa.registerApplication(
-                'crm-view',
-                () => System.import('crm-view'),
-                location => location.pathname.startsWith('/crm-view')
+                'view-crm',
+                () => System.import('view-crm'),
+                location => location.pathname.startsWith('/view-crm')
             )
 
             singleSpa.registerApplication(
-                'rps-view',
-                () => System.import('rps-view'),
-                location => location.pathname.startsWith('/rps-view')
+                'view-rps',
+                () => System.import('view-rps'),
+                location => location.pathname.startsWith('/view-rps')
             )
 
             singleSpa.start();
