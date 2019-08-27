@@ -19,6 +19,11 @@
         }
       }
 
+
+
+
+
+
     </script>
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/single-spa/4.3.7/system/single-spa.min.js"
           as="script" crossorigin="anonymous"/>
@@ -35,7 +40,7 @@
             height: 100%;
         }
 
-        #single-spa-application\:view-crm, #single-spa-application\:view-rps {
+        div[id$='single-spa-application\:view']:not(div[id$='single-spa-application\:view-navbar']){
             width: calc(100vw - 274px);
             height: calc(100vh - 120px);
             position: absolute;
@@ -49,6 +54,7 @@
 <body>
 <script>
     (function () {
+        const apps = ['view-navbar', 'view-crm', 'view-rps'];
         // See https://github.com/systemjs/systemjs/issues/1939
         var originalResolve = System.resolve
         var moduleMap = {}
@@ -72,6 +78,10 @@
             }
         }
 
+        window.getAllSys = function () {
+            return apps
+        }
+
         Promise.all([System.import('single-spa'), System.import('vue'), System.import('vue-router')]).then(function (modules) {
             var singleSpa = modules[0];
             var Vue = modules[1];
@@ -79,23 +89,17 @@
 
             Vue.use(VueRouter)
 
-            singleSpa.registerApplication(
-                'view-navbar',
-                () => System.import('view-navbar'),
-                location => true
-            )
+            apps.forEach(item => {
+                singleSpa.registerApplication(
+                    item,
+                    () => System.import(item),
+                    location => {
+                        if (item === 'view-navbar') return true
+                        return location.pathname.startsWith('/' + item)
+                    }
+                )
 
-            singleSpa.registerApplication(
-                'view-crm',
-                () => System.import('view-crm'),
-                location => location.pathname.startsWith('/view-crm')
-            )
-
-            singleSpa.registerApplication(
-                'view-rps',
-                () => System.import('view-rps'),
-                location => location.pathname.startsWith('/view-rps')
-            )
+            })
 
             singleSpa.start();
         })
