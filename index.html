@@ -13,34 +13,31 @@
           "view-navbar": "http://localhost:8080/app.js",
           "view-crm": "http://localhost:8081/app.js",
           "view-rps": "http://localhost:8082/app.js",
-          "single-spa": "https://cdnjs.cloudflare.com/ajax/libs/single-spa/4.3.7/system/single-spa.min.js",
-          "vue": "https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js",
-          "vue-router": "https://cdn.jsdelivr.net/npm/vue-router@3.0.7/dist/vue-router.min.js"
+          "single-spa": "/js/single-spa.min.js",
+          "vue": "/js/vue.js",
+          "vue-router": "/js/vue-router.min.js"
         }
       }
 
 
 
-
-
-
     </script>
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/single-spa/4.3.7/system/single-spa.min.js"
+    <link rel="preload" href="/js/single-spa.min.js"
           as="script" crossorigin="anonymous"/>
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js" as="script" crossorigin="anonymous"/>
-    <script src="https://unpkg.com/import-map-overrides@1.7.2/dist/import-map-overrides.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/4.1.0/system.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/4.1.0/extras/amd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/4.1.0/extras/named-exports.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/4.1.0/extras/named-register.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/4.1.0/extras/use-default.min.js"></script>
+    <link rel="preload" href="/js/vue.js" as="script" crossorigin="anonymous"/>
+    <script src="/js/import-map-overrides.js"></script>
+    <script src="/js/system.min.js"></script>
+    <script src="/js/amd.min.js"></script>
+    <script src="/js/named-exports.js"></script>
+    <script src="/js/named-register.min.js"></script>
+    <script src="/js/use-default.min.js"></script>
     <style>
         div[id$='view-navbar'] {
             width: 100%;
             height: 100%;
         }
 
-        div[id^='single-spa-application']:not(#single-spa-application\:view-navbar){
+        div[id^='single-spa-application']:not(#single-spa-application\:view-navbar) {
             width: calc(100vw - 274px);
             height: calc(100vh - 120px);
             position: absolute;
