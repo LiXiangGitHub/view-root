@@ -14,6 +14,7 @@
           "view-crm": "http://localhost:8081/app.js",
           "view-rps": "http://localhost:8082/app.js",
           "view-admin": "http://localhost:8083/app.js",
+          "view-tms": "http://localhost:8084/app.js",
           "single-spa": "/js/single-spa.min.js",
           "vue": "/js/vue.js",
           "vue-router": "/js/vue-router.min.js"
@@ -55,7 +56,7 @@
 <body>
 <script>
     (function () {
-        const apps = ['view-navbar', 'view-crm', 'view-rps', 'view-admin'];
+        const apps = ['view-navbar', 'view-crm', 'view-rps','view-tms', 'view-admin'];
         // See https://github.com/systemjs/systemjs/issues/1939
         var originalResolve = System.resolve
         var moduleMap = {}
